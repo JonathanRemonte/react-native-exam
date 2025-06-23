@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "eas-react-supabase",
-    "slug": "eas-react-supabase",
+    "slug": "react-native-exam",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +24,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35110e4d-1a5f-4165-b740-1e277bdfeb23"
+      }
+    },
+    "owner": "jonathanremonte"
   }
 }
