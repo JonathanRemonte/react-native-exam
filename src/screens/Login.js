@@ -1,8 +1,8 @@
 import React, { useState, createRef } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet, ScrollView, Keyboard, KeyboardAvoidingView, TouchableOpacity, Platform } from 'react-native';
-import { supabase } from '../lib/supabase'
+import { View, Text, TextInput, Alert, StyleSheet, ScrollView, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { supabase } from '@lib/supabase'
 
-import Loader from '../components/Loader';
+import Loader from '@components/Loader';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -29,7 +29,7 @@ export default function LoginScreen({ navigation }) {
     } else {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'Home' }],
+        routes: [{ name: 'AuthenticatedPages' }],
       });
     }
   };
@@ -41,10 +41,9 @@ export default function LoginScreen({ navigation }) {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         <KeyboardAvoidingView enabled>
-          {/* <Loader loading={loading} /> */}
           <Text style={styles.title}>Login</Text>
 
-          <View style={styles.SectionStyle}>
+          <View style={styles.sectionStyle}>
             <TextInput
               value={email}
               onChangeText={setEmail}
@@ -60,7 +59,7 @@ export default function LoginScreen({ navigation }) {
               />
           </View>
 
-          <View style={styles.SectionStyle}>
+          <View style={styles.sectionStyle}>
             <TextInput
               value={password}
               onChangeText={setPassword}
@@ -113,11 +112,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1e81b0',
     textAlign: 'center',
     marginBottom: 24,
   },
-  SectionStyle: {
+  sectionStyle: {
     flexDirection: 'row',
     height: 50,
     marginVertical: 8,
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     color: '#111827',
   },
   buttonStyle: {
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#76b5c5',
     borderRadius: 12,
     height: 50,
     justifyContent: 'center',
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   registerTextStyle: {
-    color: '#3b82f6',
+    color: '#1e81b0',
     textAlign: 'center',
     marginTop: 16,
     fontSize: 14,

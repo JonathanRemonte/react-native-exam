@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  View,
-  Text,
-  TextInput,
-  Alert,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from 'react-native';
-import { supabase } from '../lib/supabase';
+import { View, Text, TextInput, Alert, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { supabase } from '@lib/supabase';
 
-import Loader from '../components/Loader';
+import Loader from '@components/Loader';
 
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -27,7 +19,7 @@ export default function ResetPasswordScreen({ navigation }) {
     setLoading(true);
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://expo.dev'
+      redirectTo: 'https://expo.dev' // demo link (not functional)
     });
 
     setLoading(false);
@@ -45,7 +37,7 @@ export default function ResetPasswordScreen({ navigation }) {
       <Loader loading={loading} />
 
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Ionicons name="arrow-back" size={28} color="#3b82f6" />
+        <Ionicons name="arrow-back" size={28} color="#76b5c5" />
       </TouchableOpacity>
 
       <KeyboardAvoidingView enabled>
@@ -84,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonStyle: {
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#76b5c5',
     borderRadius: 12,
     height: 50,
     justifyContent: 'center',
@@ -104,7 +96,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1e81b0',
     textAlign: 'center',
     marginBottom: 24,
   },
