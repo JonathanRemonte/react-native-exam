@@ -30,6 +30,12 @@
         "projectId": "35110e4d-1a5f-4165-b740-1e277bdfeb23"
       }
     },
-    "owner": "jonathanremonte"
+    "owner": "jonathanremonte",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/35110e4d-1a5f-4165-b740-1e277bdfeb23"
+    }
   }
 }
