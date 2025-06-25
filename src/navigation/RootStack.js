@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HeaderAndTabs from '@navigation/HeaderAndTabs';
-
+import MaterialTabNav from '@navigation/MaterialTabNav';
 import LoginScreen from '@screens/Login';
 import SignupScreen from '@screens/Signup';
 import ResetPasswordScreen from '@screens/ResetPassword';
+import RenderLogoutButton from '@components/Logout';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,8 +33,19 @@ export default function RootStack() {
       />
       <Stack.Screen
         name="AuthenticatedPages"
-        component={HeaderAndTabs}
-        options={{ headerShown: false }}
+        component={MaterialTabNav}
+        options={{ 
+          headerShown: true, 
+          headerTitle: "MLM Monitoring", 
+          headerTitleStyle: {
+            fontWeight: 'bold'
+          },
+          headerRight: RenderLogoutButton,
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: '#76b5c5',
+        }}
       />
     </Stack.Navigator>
   );
