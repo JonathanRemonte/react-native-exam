@@ -5,14 +5,18 @@ import { supabase } from '@lib/supabase';
 
 import Loader from '@components/Loader';
 
+import { validateResetPassword } from '../utils/validators';
+
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [errorText, setErrorText] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleReset = async () => {
-    if (!email) {
-      setErrorText('Please enter your email');
+    const validationError = validateResetPassword(email);
+
+    if(validationError) {
+      setErrorText(validationError);
       return;
     }
 
@@ -105,7 +109,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 12,
     borderRadius: 6,
-    marginBottom: 16,
+    marginBottom: 4,
   },
   errorTextStyle: {
     color: '#ef4444',

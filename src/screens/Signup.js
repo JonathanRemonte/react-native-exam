@@ -4,6 +4,8 @@ import { supabase } from '@lib/supabase';
 
 import Loader from '@components/Loader';
 
+import { validateRegister } from '../utils/validators';
+
 export default function SignupScreen({ navigation }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -21,12 +23,10 @@ export default function SignupScreen({ navigation }) {
   const codeRef = useRef();
 
   const handleSignup = async () => {
-    if (!firstName || !lastName || !email || !password || !confirmPassword || !code) {
-      setErrorText('All fields are required. Please fill all fields.');
-      return;
-    }
-    if (password !== confirmPassword) {
-      setErrorText('Passwords do not match');
+    const errorMessage = validateRegister(firstName, lastName, email, password, confirmPassword, code);
+
+    if (errorMessage) {
+      setErrorText(errorMessage);
       return;
     }
 

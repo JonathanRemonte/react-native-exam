@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,21 +10,48 @@ import {
   Platform,
 } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import Loader from '@components/Loader';
+import { isValidEmail } from '../utils/validators';
+
 
 export default function InviteScreen() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errortext, setErrortext] = useState('');
 
-  const handleInvite = () => {
+  // clears error text when tab was switched
+  useFocusEffect(
+    useCallback(() => {
+      setErrortext('');
+      return () => {
+        setErrortext('');
+      };
+    }, [])
+  );
+
+  const handleInvite = async () => {
     if (!email) {
-      Alert.alert('Input Required', 'Please enter an email to send an invite.');
+      setErrortext('Please enter an email to send an invite.');
       return;
     }
-    // Replace this with real invite logic (e.g., Supabase function)
-    Alert.alert('Invite Sent', `An invitation was sent to ${email}`);
-    setEmail('');
+
+    if (!isValidEmail(email)) {
+      setErrortext('Please enter a valid email address.');
+      return;
+    }
+
+    setLoading(true);
+
+    // Simulate API request delay (1 second)
+    setTimeout(() => {
+      Alert.alert('Invite Sent', `An invitation was sent to ${email}`);
+      setEmail('');
+      setErrortext('');
+      setLoading(false);
+    }, 1000);
   };
+
 
   return (
     <View style={styles.mainBody}>
@@ -43,6 +70,12 @@ export default function InviteScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
           />
+
+          {errortext != '' ? (                            // render dynamic error message
+            <Text style={styles.errorTextStyle}>
+              {errortext}
+            </Text>
+          ) : null}
 
           <TouchableOpacity style={styles.button} onPress={handleInvite}>
             <Text style={styles.buttonText}>Send Invite</Text>
@@ -78,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     backgroundColor: '#ffffff',
-    marginBottom: 16,
+    // marginBottom: 16,
   },
   button: {
     backgroundColor: '#1e81b0',
@@ -90,10 +123,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    marginTop: 16
   },
   buttonText: {
     color: '#ffffff',
     fontWeight: '600',
     fontSize: 16,
   },
+  errorTextStyle: {
+    color: '#ef4444',
+    textAlign: 'center',
+    fontSize: 13,
+    marginTop: 8,
+  }
 });

@@ -4,6 +4,8 @@ import { supabase } from '@lib/supabase'
 
 import Loader from '@components/Loader';
 
+import { validateLogin } from '../utils/validators';
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,8 +15,10 @@ export default function LoginScreen({ navigation }) {
   const passwordInputRef = createRef();
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      setErrortext('Please fill all fields.')
+    const validationError = validateLogin(email, password);
+
+    if (validationError) {
+      setErrortext(validationError);
       return;
     }
 
@@ -24,9 +28,12 @@ export default function LoginScreen({ navigation }) {
 
     setLoading(false);
 
-    if (error){
-      Alert.alert('Login failed', error.message);
+    if (error) {
+      setErrortext(`Login failed: ${error.message}`);
     } else {
+      setEmail('');
+      setPassword('');
+      setErrortext('');
       navigation.reset({
         index: 0,
         routes: [{ name: 'AuthenticatedPages' }],
@@ -87,7 +94,11 @@ export default function LoginScreen({ navigation }) {
 
           <Text
             style={styles.registerTextStyle}
-            onPress={() => navigation.navigate('ResetPassword')}>
+            onPress={() => 
+              {
+                setErrortext('');
+                navigation.navigate('ResetPassword');
+              }}>
             Forgot Password?
           </Text>
 
